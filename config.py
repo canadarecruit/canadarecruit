@@ -24,8 +24,8 @@ class Config:
     DB_PASSWORD = os.getenv('DB_PASSWORD')
     DB_NAME = os.getenv('DB_NAME')
 
-    FRONTEND_URL = os.getenv('FRONTEND_URL', 'https://6e78297843f7.ngrok-free.app')   
-    BACKEND_URL = os.getenv('BACKEND_URL', 'https://471abceb70e4.ngrok-free.app')
+    FRONTEND_URL = os.getenv('FRONTEND_URL', 'https://canada-recruit.vercel.app')   
+    BACKEND_URL = os.getenv('BACKEND_URL', 'https://canadarecruit.vercel.app')
 
     CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME')
     CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY')
