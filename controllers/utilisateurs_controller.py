@@ -283,14 +283,8 @@ L'équipe Canada Recruitment
     @staticmethod
     def get_all_users():
         """Récupère la liste de tous les utilisateurs."""
-        token = UsersController._get_token()
-        if not token:
-            return jsonify({"message": "Token manquant"}), HTTPStatus.UNAUTHORIZED
-
+        
         try:
-            decoded_token = jwt.decode(token, Config.SECRET_KEY, algorithms=['HS256'])
-            user_id = decoded_token.get('user_id')
-
             users = Utilisateurs.get_all_users()
             if not users:
                 return jsonify({"message": "Aucun utilisateur trouvé"}), HTTPStatus.NOT_FOUND
@@ -518,13 +512,13 @@ L'équipe Canada Recruitment
             Payment.create(
                 user_id=user_id,
                 description="Frais d'évaluation",
-                amount=50,
+                amount=150,
                 currency="USD",
                 status="pending"
             )
             Notification.create(
                 user_id=user_id,
-                message="Paiement en attente, Frais d'évaluation 50 USD",
+                message="Paiement en attente, Frais d'évaluation 150 USD",
                 type="info"
             )
 

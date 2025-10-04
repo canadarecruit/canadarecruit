@@ -37,7 +37,6 @@ def get_user_by_id_route():
     return UsersController.get_user_by_id()
 
 @auth_routes.route('/users', methods=['GET'])
-@UsersController.token_required
 def get_all_users_route():
     return UsersController.get_all_users()
 
