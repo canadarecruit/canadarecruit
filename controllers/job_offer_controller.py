@@ -35,7 +35,6 @@ class JobOfferController:
         return decorated
 
     @staticmethod
-    @token_required
     def create_job_offer():
         """Crée une nouvelle offre d'emploi."""
         try:

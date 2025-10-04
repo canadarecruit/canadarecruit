@@ -40,7 +40,6 @@ class PaymentController:
         return decorated
 
     @staticmethod
-    @token_required
     def create_payment():
         """Crée un nouveau paiement pour un utilisateur."""
         try:
@@ -172,7 +171,6 @@ class PaymentController:
             return jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR
 
     @staticmethod
-    @token_required
     def delete_payment():
         """Supprime un paiement."""
         try:

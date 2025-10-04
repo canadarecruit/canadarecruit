@@ -94,7 +94,6 @@ def rejet_document_route(document_id):
 
 # Routes pour JobOfferController
 @auth_routes.route('/job_offers', methods=['POST'])
-@JobOfferController.token_required
 def create_job_offer_route():
     return JobOfferController.create_job_offer()
 
@@ -144,7 +143,6 @@ def delete_notification_route():
 
 # Routes pour PaymentController
 @auth_routes.route('/payments', methods=['POST'])
-@PaymentController.token_required
 def create_payment_route():
     return PaymentController.create_payment()
 
