@@ -52,13 +52,7 @@ class JobOfferController:
             featured = data.get('featured')
             description = data.get('description')
             requirements = data.get('requirements')
-
-            # Vérification du token pour s'assurer que seul un administrateur peut créer une offre
-            token = JobOfferController._get_token()
-            decoded_token = jwt.decode(token, Config.SECRET_KEY, algorithms=['HS256'])
-            if decoded_token.get('role') != 'admin':
-                return jsonify({"message": "Accès refusé. Seuls les administrateurs peuvent créer des offres d'emploi."}), HTTPStatus.FORBIDDEN
-
+            
             job_offer_id = JobOffer.create(title, company, location, type, salary, category, featured, description, requirements)
             return jsonify({
                 'message': 'Offre d\'emploi créée avec succès',

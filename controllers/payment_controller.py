@@ -60,13 +60,7 @@ class PaymentController:
                 return jsonify({"message": "Le montant doit être un nombre supérieur à 0"}), HTTPStatus.BAD_REQUEST
             if not currency:
                 return jsonify({"message": "La devise est requise"}), HTTPStatus.BAD_REQUEST
-
-            # Vérification du token pour s'assurer que l'utilisateur a le droit de créer ce paiement
-            token = PaymentController._get_token()
-            decoded_token = jwt.decode(token, Config.SECRET_KEY, algorithms=['HS256'])
-            if decoded_token.get('user_id') != user_id and decoded_token.get('role') != 'admin':
-                return jsonify({"message": "Accès refusé. Vous ne pouvez créer un paiement que pour vous-même ou en tant qu'administrateur."}), HTTPStatus.FORBIDDEN
-
+            
             payment_id = Payment.create(user_id, description, amount, currency, status)
             return jsonify({
                 'message': 'Paiement créé avec succès',
