@@ -145,13 +145,7 @@ class JobOfferController:
                 return jsonify({"message": "ID de l'offre d'emploi requis"}), HTTPStatus.BAD_REQUEST
 
             id = data.get('id')
-
-            # Vérification du token pour s'assurer que seul un administrateur peut supprimer une offre
-            token = JobOfferController._get_token()
-            decoded_token = jwt.decode(token, Config.SECRET_KEY, algorithms=['HS256'])
-            if decoded_token.get('role') != 'admin':
-                return jsonify({"message": "Accès refusé. Seuls les administrateurs peuvent supprimer des offres d'emploi."}), HTTPStatus.FORBIDDEN
-
+            
             job_offer = JobOffer.get_by_id(id)
             if not job_offer:
                 return jsonify({"message": "Offre d'emploi non trouvée"}), HTTPStatus.NOT_FOUND

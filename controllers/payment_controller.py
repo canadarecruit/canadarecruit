@@ -174,15 +174,11 @@ class PaymentController:
 
             id = data.get('id')
 
-            # Vérification du token pour s'assurer que l'utilisateur a le droit de supprimer ce paiement
-            token = PaymentController._get_token()
-            decoded_token = jwt.decode(token, Config.SECRET_KEY, algorithms=['HS256'])
+           
             payment = Payment.get_by_id(id)
             if not payment:
                 return jsonify({"message": "Paiement non trouvé"}), HTTPStatus.NOT_FOUND
-            if decoded_token.get('user_id') != payment['user_id'] and decoded_token.get('role') != 'admin':
-                return jsonify({"message": "Accès refusé. Vous ne pouvez supprimer que vos propres paiements ou en tant qu'administrateur."}), HTTPStatus.FORBIDDEN
-
+            
             success = Payment.delete(id)
             if not success:
                 return jsonify({"message": "Paiement non trouvé"}), HTTPStatus.NOT_FOUND
