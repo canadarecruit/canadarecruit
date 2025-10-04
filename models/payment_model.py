@@ -162,3 +162,27 @@ class Payment:
         finally:
             cursor.close()
             db.close()
+
+    @staticmethod
+    def get_all():
+        """Récupère tous les paiements."""
+        db = Config.get_db_connection()
+        if not db:
+            return None
+
+        cursor = db.cursor(dictionary=True)
+        try:
+            query = """
+                SELECT id, user_id, description, amount, currency, status, payment_date
+                FROM payments
+                ORDER BY payment_date DESC
+            """
+            cursor.execute(query)
+            results = cursor.fetchall()
+            return results if results else []
+        except Exception as e:
+            print(f"Erreur lors de la récupération des paiements : {e}")
+            return None
+        finally:
+            cursor.close()
+            db.close()

@@ -113,7 +113,6 @@ def get_all_job_offers_route():
     return JobOfferController.get_all_job_offers()
 
 @auth_routes.route('/job_offers', methods=['DELETE'])
-@JobOfferController.token_required
 def delete_job_offer_route():
     return JobOfferController.delete_job_offer()
 
@@ -173,6 +172,10 @@ def delete_payment_route():
 @PaymentController.token_required
 def send_payment_info_route():
     return PaymentController.send_payment_info()
+
+@auth_routes.route('/payments/all', methods=['POST'])
+def get_all_payments_route():
+    return PaymentController.get_all_payments()
 
 # Routes pour StepController
 @auth_routes.route('/steps', methods=['POST'])

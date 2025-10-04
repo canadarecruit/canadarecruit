@@ -144,7 +144,6 @@ class JobOfferController:
             return jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR
 
     @staticmethod
-    @token_required
     def delete_job_offer():
         """Supprime une offre d'emploi."""
         try:

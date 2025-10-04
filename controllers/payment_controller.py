@@ -294,3 +294,31 @@ class PaymentController:
         except Exception as e:
             print(f"Erreur inattendue : {str(e)}")
             return jsonify({"error": "Erreur serveur lors du traitement du paiement"}), HTTPStatus.INTERNAL_SERVER_ERROR
+        
+    @staticmethod
+    def get_all_payments():
+        """Récupère tous les paiements avec jointure sur les utilisateurs pour afficher le nom."""
+        try:
+            # Vérification du token pour s'assurer que seul un administrateur peut voir tous les paiements            
+            # Récupérer tous les paiements (assumant que Payment.get_all() existe et retourne une liste de dicts)
+            payments = Payment.get_all()
+            if not payments:
+                return jsonify({"message": "Aucun paiement trouvé"}), HTTPStatus.NOT_FOUND
+
+            enriched_payments = []
+            for payment in payments:
+                user = Utilisateurs.get_user_by_id(payment['user_id'])
+                if user:
+                    payment['user_name'] = f"{user['firstName']} {user['lastName']}"
+                    # Optionnel : supprimer user_id si on ne veut que le nom
+                    # del payment['user_id'].
+                else:
+                    payment['user_name'] = 'Utilisateur inconnu'
+                enriched_payments.append(payment)
+
+            return jsonify({
+                "message": "Tous les paiements récupérés avec succès",
+                "payments": enriched_payments
+            }), HTTPStatus.OK
+        except Exception as e:
+            return jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR
