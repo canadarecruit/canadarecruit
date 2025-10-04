@@ -161,7 +161,6 @@ def get_payment_by_id_route():
     return PaymentController.get_payment_by_id()
 
 @auth_routes.route('/payments', methods=['DELETE'])
-@PaymentController.token_required
 def delete_payment_route():
     return PaymentController.delete_payment()
 
